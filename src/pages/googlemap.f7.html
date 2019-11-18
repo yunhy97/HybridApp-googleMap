@@ -1,0 +1,60 @@
+<template>
+  <div class="page" data-name="googlemap">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Google 지도</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Google 지도</div>
+      <div class="block">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import $$ from 'dom7';
+
+  export default {
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+
+        // 위치좌표정보
+        navigator.geolocation.getCurrentPosition(function(position) {
+          console.log('latitude : ' + position.coords.latitud);
+          console.log('longitude : ' + position.coords.longitude);
+
+          // 구글지도
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+              lat: position.coords.latitude, 
+              lng: position.coords.longitude
+            },
+            zoom: 18
+          });
+        }, function(error) {
+          console.log('code : ' + error.code);
+          console.log('message : ' + error.message);
+
+          // 구글지도 - 명지전문대학
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+              lat: 37.584919, 
+              lng: 126.925144
+            },
+            zoom: 18
+          });
+        });        
+      }
+    }
+  }
+</script>
